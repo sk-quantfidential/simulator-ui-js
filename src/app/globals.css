@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #0a0e17;
+    --foreground: #e2e8f0;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-text font-mono antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+
+  h1 {
+    @apply text-4xl;
+  }
+
+  h2 {
+    @apply text-3xl;
+  }
+
+  h3 {
+    @apply text-2xl;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface border border-border rounded-lg p-6 shadow-lg;
+  }
+
+  .card-hover {
+    @apply card transition-all duration-200 hover:border-primary hover:shadow-glow;
+  }
+
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary text-white hover:bg-primary-dark active:bg-primary-light;
+  }
+
+  .btn-secondary {
+    @apply btn bg-surface-hover text-text hover:bg-surface-active;
+  }
+
+  .btn-danger {
+    @apply btn bg-danger text-white hover:bg-danger-dark active:bg-danger-light;
+  }
+
+  .input {
+    @apply w-full px-4 py-2 bg-surface border border-border rounded-lg;
+    @apply text-text placeholder-text-tertiary;
+    @apply focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border;
+  }
+
+  .status-up {
+    @apply badge bg-success/20 text-success border-success;
+  }
+
+  .status-down {
+    @apply badge bg-danger/20 text-danger border-danger;
+  }
+
+  .status-degraded {
+    @apply badge bg-warning/20 text-warning border-warning;
+  }
+
+  .status-unknown {
+    @apply badge bg-text-tertiary/20 text-text-tertiary border-text-tertiary;
+  }
+
+  .metric-positive {
+    @apply text-success;
+  }
+
+  .metric-negative {
+    @apply text-danger;
+  }
+
+  .metric-neutral {
+    @apply text-text-secondary;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+    }
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #475569 #1e2633;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-surface;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full hover:bg-border-light;
+  }
+}
