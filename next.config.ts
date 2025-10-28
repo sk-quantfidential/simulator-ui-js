@@ -5,7 +5,10 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
 
-  // Webpack configuration for handling CSV files
+  // Enable Turbopack (default in Next.js 16)
+  turbopack: {},
+
+  // Webpack configuration for handling CSV files (fallback for webpack mode)
   webpack: (config) => {
     config.module.rules.push({
       test: /\.csv$/,

@@ -1,0 +1,1 @@
+../.claude/plugins/git_quality_standards/scripts/validate-repository.sh

@@ -4,7 +4,7 @@
  */
 
 import type { RiskPort } from '@/application/ports/risk-port'
-import type { RiskMetrics, PortfolioRisk, AssetRisk, StressTestResult, RiskLevel } from '@/domain/types'
+import type { RiskMetrics, PortfolioRisk, AssetRisk, StressTestResult, RiskLevel, CryptoAsset } from '@/domain/types'
 import { httpClient } from '../utils/http-client'
 import { getServiceEndpoints } from '../config/api-config'
 import { createSSEClient, type SSEClient } from '../utils/sse-client'
@@ -36,16 +36,18 @@ export class RestRiskMonitor implements RiskPort {
       )
 
       return {
-        totalValue: response.total_value || 0,
-        totalExposure: response.total_exposure || 0,
-        netExposure: response.net_exposure || 0,
-        valueAtRisk99: response.var_99 || 0,
-        expectedShortfall: response.expected_shortfall || 0,
-        sharpeRatio: response.sharpe_ratio || 0,
-        beta: response.beta || 0,
-        assetBreakdown: response.asset_breakdown || [],
-        correlationMatrix: response.correlation_matrix || {},
-        timestamp: response.timestamp || Date.now(),
+        metrics: {
+          totalExposure: response.total_exposure || 0,
+          netExposure: response.net_exposure || 0,
+          valueAtRisk99: response.var_99 || 0,
+          expectedShortfall: response.expected_shortfall || 0,
+          marginUtilization: response.margin_utilization || 0,
+          leverageRatio: response.leverage_ratio || 1.0,
+          riskLevel: response.risk_level || 'medium',
+          timestamp: response.timestamp || Date.now(),
+        },
+        assetRisks: response.asset_risks || [],
+        correlationMatrix: response.correlation_matrix || [],
       }
     } catch (error) {
       console.error('Failed to fetch portfolio risk:', error)
@@ -53,7 +55,7 @@ export class RestRiskMonitor implements RiskPort {
     }
   }
 
-  async getAssetRisk(asset: string): Promise<AssetRisk> {
+  async getAssetRisk(asset: CryptoAsset): Promise<AssetRisk> {
     try {
       const response = await httpClient.get<any>(
         `${this.baseUrl}/api/v1/risk/asset/${asset}`
@@ -62,22 +64,18 @@ export class RestRiskMonitor implements RiskPort {
       return {
         asset,
         exposure: response.exposure || 0,
+        var99: response.var_99 || 0,
         volatility: response.volatility || 0,
         beta: response.beta || 0,
-        valueAtRisk99: response.var_99 || 0,
-        contributionToPortfolioRisk: response.contribution_to_portfolio_risk || 0,
-        timestamp: response.timestamp || Date.now(),
       }
     } catch (error) {
       console.error(`Failed to fetch risk for asset ${asset}:`, error)
       return {
         asset,
         exposure: 0,
+        var99: 0,
         volatility: 0,
         beta: 0,
-        valueAtRisk99: 0,
-        contributionToPortfolioRisk: 0,
-        timestamp: Date.now(),
       }
     }
   }
@@ -237,39 +235,44 @@ export class RestRiskMonitor implements RiskPort {
 
   private createMockPortfolioRisk(): PortfolioRisk {
     return {
-      totalValue: 2000000,
-      totalExposure: 1500000,
-      netExposure: 850000,
-      valueAtRisk99: 125000,
-      expectedShortfall: 185000,
-      sharpeRatio: 1.45,
-      beta: 0.85,
-      assetBreakdown: [
+      metrics: {
+        totalExposure: 1500000,
+        netExposure: 850000,
+        valueAtRisk99: 125000,
+        expectedShortfall: 185000,
+        marginUtilization: 0.65,
+        leverageRatio: 1.5,
+        riskLevel: 'medium',
+        timestamp: Date.now(),
+      },
+      assetRisks: [
         {
           asset: 'BTC',
           exposure: 650000,
-          weight: 0.433,
-          contributionToRisk: 0.52,
+          var99: 65000,
+          volatility: 0.45,
+          beta: 1.0,
         },
         {
           asset: 'ETH',
           exposure: 437500,
-          weight: 0.292,
-          contributionToRisk: 0.31,
+          var99: 43750,
+          volatility: 0.52,
+          beta: 1.15,
         },
         {
           asset: 'SOL',
           exposure: 412500,
-          weight: 0.275,
-          contributionToRisk: 0.17,
+          var99: 41250,
+          volatility: 0.68,
+          beta: 1.35,
         },
       ],
-      correlationMatrix: {
-        BTC: { BTC: 1.0, ETH: 0.82, SOL: 0.68 },
-        ETH: { BTC: 0.82, ETH: 1.0, SOL: 0.75 },
-        SOL: { BTC: 0.68, ETH: 0.75, SOL: 1.0 },
-      },
-      timestamp: Date.now(),
+      correlationMatrix: [
+        [1.0, 0.82, 0.68],  // BTC row
+        [0.82, 1.0, 0.75],  // ETH row
+        [0.68, 0.75, 1.0],  // SOL row
+      ],
     }
   }
 

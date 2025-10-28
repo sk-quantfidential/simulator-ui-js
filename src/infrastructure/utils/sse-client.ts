@@ -203,7 +203,7 @@ export class SSEClient {
       this.openHandlers.forEach(handler => handler())
     }
 
-    this.eventSource.onerror = (event) => {
+    this.eventSource.onerror = (_event) => {
       const error = new Error('SSE connection error')
       this.handleError(error)
 

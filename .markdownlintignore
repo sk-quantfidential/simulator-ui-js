@@ -1,0 +1,19 @@
+# Markdownlint ignore patterns
+# Files and directories to exclude from markdown linting
+
+# Build output
+.next/
+out/
+dist/
+build/
+
+# Dependencies
+node_modules/
+
+# Editor directories
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.log
