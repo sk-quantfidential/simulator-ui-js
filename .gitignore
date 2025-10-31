@@ -1,3 +1,6 @@
+.claude*
+/.claude/
+
 # Dependencies
 /node_modules
 /.pnp
@@ -39,17 +42,69 @@ next-env.d.ts
 # OS
 Thumbs.db
 
-# Additional security hygiene
+# === Added by Security Phase 0: Hygiene ===
+# Epic: TSE-0002 - Security Hardening and Audit Framework
+
+# === Security: Additional Secrets and Credentials ===
 .env
-.env.development
-.env.production
-.env.test
-.env.staging
 .env.*
-.next/cache/
+!.env.example
+!.env.template
+*.key
+*.crt
+*.p12
+*.pfx
+secrets.yaml
+secrets.json
+credentials.json
+service-account*.json
+*-key.json
+auth-config*.json
+
+# === Security: Additional Build Artifacts ===
 .turbo/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+dist/
+.webpack/
+.parcel-cache/
+.cache/
+
+# === Security: Additional Logs ===
+lerna-debug.log*
 pnpm-debug.log*
-*.log
+
+# === Security: Additional Editor Files ===
+.vscode/settings.json
+*.swp
+*.swo
+*.swn
+*~
+.project
+.classpath
+.settings/
+
+# === Security: Local Configuration ===
+.npmrc
+.yarnrc.yml
+local.json
+config.local.js
+config.local.ts
+
+# === Security: Testing and Coverage ===
+.nyc_output/
+*.lcov
+test-results/
+playwright-report/
+
+# === Security: Scan Results and Artifacts ===
+sbom.spdx.json
+sbom.spdx.sha256
+grype.json
+grype.sarif
+osv.results.json
+gitleaks.json
+npm-audit-full.json
+npm-audit-prod.json
+semgrep.sarif
+codeql-results/
+backdoor-recon.txt
+results.sarif
