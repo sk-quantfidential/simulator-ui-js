@@ -17,3 +17,18 @@ node_modules/
 # Temporary files
 *.tmp
 *.log
+
+# Standardized templates (minor markdown style variations)
+.github/pull_request_template.md
+
+# Pre-existing files (pending cleanup in separate PR)
+README.md
+AGENTS.md
+CONTRIBUTING.md
+docs/ANALYSIS.md
+docs/IMPLEMENTATION-SUMMARY.md
+docs/SSE-IMPLEMENTATION.md
+IMPLEMENTATION-SUMMARY.md
+SSE-IMPLEMENTATION.md
+docs/prs/feat-epic-TSE-0001-initial-nextjs-ui.md
+docs/prs/feature-TSE-0001.13.0-initial-nextjs-ui-with-sse.md
