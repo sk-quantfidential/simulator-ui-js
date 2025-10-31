@@ -17,8 +17,23 @@
 out/**
 
 ## Third-Party Dependencies
-# Node modules (should be in .gitignore)
-node_modules/**
+# Node.js / Next.js; Node modules (should be in .gitignore)
+.next/**
+out/**
+build/**
+dist/**
+coverage/**
+
+# Dependencies
+package-lock.json
+yarn.lock
+
+# IDE
+.vscode/**
+.idea/**
+
+# OS
+.DS_Store
 
 ## Documentation Examples
 # Examples that may intentionally show errors
