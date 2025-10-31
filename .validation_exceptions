@@ -1,0 +1,35 @@
+# Validation Exceptions Configuration
+# Files and patterns listed here are excluded from various validation checks
+#
+# Version: 1.0.0
+# Project: simulator-ui-js
+# Last Updated: 2025-10-28
+
+# Format:
+# - Lines starting with # are comments
+# - Empty lines are ignored
+# - Glob patterns are supported (e.g., docs/*.md)
+# - Paths are relative to repository root
+
+## Next.js Generated Files
+# Build output and generated files
+.next/**
+out/**
+
+## Third-Party Dependencies
+# Node modules (should be in .gitignore)
+node_modules/**
+
+## Documentation Examples
+# Examples that may intentionally show errors
+# docs/examples/**
+
+## Test Fixtures
+# Test files with intentional formatting
+# tests/fixtures/**
+
+## Legacy Files
+# Add legacy files that don't conform to current standards
+# (none currently)
+
+# End of validation exceptions

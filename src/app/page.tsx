@@ -6,7 +6,7 @@ import { ServiceHealthIndicator } from '@/presentation/components/service-health
 import type { ServiceHealth, MarketPrice } from '@/domain/types'
 import { RestServiceRegistry } from '@/infrastructure/adapters/rest-service-registry'
 import { RestMarketData } from '@/infrastructure/adapters/rest-market-data'
-import { formatUSD, formatPercent } from '@/domain/services/formatters'
+import { formatUSD } from '@/domain/services/formatters'
 
 export default function DashboardPage() {
   const [services, setServices] = useState<ServiceHealth[]>([])

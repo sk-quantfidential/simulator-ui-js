@@ -3,7 +3,7 @@
  * Pure functions for risk metrics and calculations
  */
 
-import type { Position, RiskLevel, RiskMetrics, AssetRisk, CryptoAsset } from '../types'
+import type { Position, RiskLevel, RiskMetrics } from '../types'
 
 /**
  * Calculate Value at Risk (VaR) at 99% confidence level

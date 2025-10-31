@@ -11,8 +11,6 @@ import { createSSEClient, type SSEClient } from '../utils/sse-client'
 
 export class RestMarketData implements MarketDataPort {
   private baseUrl: string
-  private cache: Map<string, { data: any; timestamp: number }> = new Map()
-  private cacheTimeout = 2000 // 2 seconds cache
 
   constructor() {
     this.baseUrl = getServiceEndpoints().marketDataSimulator
@@ -43,7 +41,8 @@ export class RestMarketData implements MarketDataPort {
       )
     } catch (error) {
       console.error('Failed to fetch all prices:', error)
-      return ['BTC', 'ETH', 'SOL'].map(this.createMockPrice)
+      const assets: CryptoAsset[] = ['BTC', 'ETH', 'SOL']
+      return assets.map(this.createMockPrice)
     }
   }
 

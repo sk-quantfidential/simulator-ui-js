@@ -8,7 +8,7 @@ interface PriceChartProps {
   data: { timestamp: number; price: number }[]
 }
 
-export function PriceChart({ asset, data }: PriceChartProps) {
+export function PriceChart({ asset: _asset, data }: PriceChartProps) {
   const chartData = data.map(d => ({
     time: new Date(d.timestamp).toLocaleTimeString(),
     price: d.price,

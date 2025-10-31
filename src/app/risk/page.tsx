@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { MetricCard } from '@/presentation/components/metric-card'
 import type { RiskMetrics } from '@/domain/types'
-import { formatUSD, formatPercent } from '@/domain/services/formatters'
+import { formatUSD } from '@/domain/services/formatters'
 import { RestRiskMonitor } from '@/infrastructure/adapters/rest-risk-monitor'
 
 export default function RiskPage() {
